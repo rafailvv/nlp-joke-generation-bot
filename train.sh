@@ -6,3 +6,7 @@ deepspeed run_clm.py \
     --do_train \
     --do_eval \
     --output_dir /tmp/test-clm \
+    --report_to wandb \
+    --num_train_epochs 1 \
+    --push_to_hub \
+    --hub_model_id AlekseyKorshuk/gpt2-jokes
