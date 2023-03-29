@@ -9,4 +9,5 @@ deepspeed run_clm.py \
     --report_to wandb \
     --num_train_epochs 1 \
     --push_to_hub \
-    --hub_model_id AlekseyKorshuk/gpt2-jokes
+    --hub_model_id AlekseyKorshuk/gpt2-jokes \
+    --overwrite_output_dir
