@@ -512,6 +512,8 @@ def main():
     # https://huggingface.co/docs/datasets/package_reference/main_classes.html#datasets.Dataset.map
 
     lm_datasets = tokenized_datasets
+
+    logger.info("Sample:", lm_datasets["train"][0])
     # with training_args.main_process_first(desc="grouping texts together"):
     #     if not data_args.streaming:
     #         lm_datasets = tokenized_datasets.map(
