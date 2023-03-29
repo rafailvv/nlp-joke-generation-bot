@@ -457,20 +457,47 @@ def main():
             )
         block_size = min(data_args.block_size, tokenizer.model_max_length)
 
+    def tokenize_function_no_pad(examples):
+        with CaptureLogger(tok_logger) as cl:
+            texts = examples[text_column_name]
+            texts = ["<|endoftext|>" + text + "<|endoftext|>" for text in texts]
+            output = tokenizer(texts, padding=False, max_length=block_size, truncation=True)
+        return output
+
     def tokenize_function(examples):
         with CaptureLogger(tok_logger) as cl:
             texts = examples[text_column_name]
             texts = ["<|endoftext|>" + text + "<|endoftext|>" for text in texts]
             output = tokenizer(texts, padding="max_length", max_length=block_size, truncation=True)
         output["labels"] = output["input_ids"].copy()
-        # clm input could be much much longer than block_size
-        if "Token indices sequence length is longer than the" in cl.out:
-            tok_logger.warning(
-                "^^^^^^^^^^^^^^^^ Please ignore the warning above - this long input will be chunked into smaller bits"
-                " before being passed to the model."
-            )
+
         return output
 
+    with training_args.main_process_first(desc="dataset map tokenization"):
+        if not data_args.streaming:
+            tokenized_datasets = raw_datasets.map(
+                tokenize_function_no_pad,
+                batched=True,
+                num_proc=data_args.preprocessing_num_workers,
+                remove_columns=column_names,
+                load_from_cache_file=not data_args.overwrite_cache,
+                desc="Running tokenizer on dataset",
+            )
+        else:
+            tokenized_datasets = raw_datasets.map(
+                tokenize_function_no_pad,
+                batched=True,
+                remove_columns=column_names,
+            )
+
+    max_length = max(
+        [
+            len(row["input_ids"]) for row in tokenized_datasets["train"]
+        ] + [
+            len(row["input_ids"]) for row in tokenized_datasets["validation"]
+        ]
+    )
+    block_size = min(max_length, block_size)
     with training_args.main_process_first(desc="dataset map tokenization"):
         if not data_args.streaming:
             tokenized_datasets = raw_datasets.map(
