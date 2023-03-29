@@ -1,13 +1,17 @@
 deepspeed run_clm.py \
-    --model_name_or_path gpt2 \
-    --dataset_name Fraser/short-jokes \
-    --per_device_train_batch_size 8 \
-    --per_device_eval_batch_size 8 \
-    --do_train \
-    --do_eval \
-    --output_dir /tmp/test-clm \
-    --report_to wandb \
-    --num_train_epochs 1 \
-    --push_to_hub \
-    --hub_model_id AlekseyKorshuk/gpt2-jokes \
-    --overwrite_output_dir
+  --model_name_or_path gpt2 \
+  --dataset_name Fraser/short-jokes \
+  --per_device_train_batch_size 32 \
+  --per_device_eval_batch_size 32 \
+  --do_train \
+  --do_eval \
+  --output_dir /tmp/test-clm \
+  --report_to wandb \
+  --num_train_epochs 1 \
+  --push_to_hub \
+  --hub_model_id AlekseyKorshuk/gpt2-jokes \
+  --overwrite_output_dir \
+  --evaluation_strategy "steps" \
+  --eval_steps 100 \
+  --save_strategy epoch \
+  --save_steps 1
