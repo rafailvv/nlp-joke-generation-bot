@@ -498,6 +498,8 @@ def main():
         ]
     )
     block_size = min(max_length, block_size)
+
+    logger.info("Block size:", block_size)
     with training_args.main_process_first(desc="dataset map tokenization"):
         if not data_args.streaming:
             tokenized_datasets = raw_datasets.map(
