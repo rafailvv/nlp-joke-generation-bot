@@ -460,14 +460,14 @@ def main():
     def tokenize_function_no_pad(examples):
         with CaptureLogger(tok_logger) as cl:
             texts = examples[text_column_name]
-            texts = ["<|endoftext|>" + text + "<|endoftext|>" for text in texts]
+            texts = [text + "<|endoftext|>" for text in texts]
             output = tokenizer(texts, padding=False, max_length=block_size, truncation=True)
         return output
 
     def tokenize_function(examples):
         with CaptureLogger(tok_logger) as cl:
             texts = examples[text_column_name]
-            texts = ["<|endoftext|>" + text + "<|endoftext|>" for text in texts]
+            texts = [text + "<|endoftext|>" for text in texts]
             output = tokenizer(texts, padding="max_length", max_length=block_size, truncation=True)
         output["labels"] = output["input_ids"].copy()
 
