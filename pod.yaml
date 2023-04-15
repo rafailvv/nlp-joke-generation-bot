@@ -48,9 +48,9 @@ spec:
                 operator: In
                 values:
                   - A100_NVLINK_80GB
-                  - A100_PCIE_80GB
-                  - A100_NVLINK
-                  - A100_PCIE_40GB
+#                  - A100_PCIE_80GB
+#                  - A100_NVLINK
+#                  - A100_PCIE_40GB
       preferredDuringSchedulingIgnoredDuringExecution:
         - weight: 40
           preference:
