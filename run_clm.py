@@ -544,20 +544,20 @@ def main():
     lm_datasets = tokenized_datasets
 
     logger.info("Sample:", lm_datasets["train"][0])
-    # with training_args.main_process_first(desc="grouping texts together"):
-    #     if not data_args.streaming:
-    #         lm_datasets = tokenized_datasets.map(
-    #             group_texts,
-    #             batched=True,
-    #             num_proc=data_args.preprocessing_num_workers,
-    #             load_from_cache_file=not data_args.overwrite_cache,
-    #             desc=f"Grouping texts in chunks of {block_size}",
-    #         )
-    #     else:
-    #         lm_datasets = tokenized_datasets.map(
-    #             group_texts,
-    #             batched=True,
-    #         )
+    with training_args.main_process_first(desc="grouping texts together"):
+        if not data_args.streaming:
+            lm_datasets = tokenized_datasets.map(
+                group_texts,
+                batched=True,
+                num_proc=data_args.preprocessing_num_workers,
+                load_from_cache_file=not data_args.overwrite_cache,
+                desc=f"Grouping texts in chunks of {block_size}",
+            )
+        else:
+            lm_datasets = tokenized_datasets.map(
+                group_texts,
+                batched=True,
+            )
 
     if training_args.do_train:
         if "train" not in tokenized_datasets:

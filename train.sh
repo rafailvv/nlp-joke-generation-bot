@@ -6,6 +6,7 @@ deepspeed run_clm.py \
   --gradient_accumulation_steps 1 \
   --do_train \
   --do_eval \
+  --fp16 \
   --output_dir /tmp/test-clm \
   --report_to wandb \
   --num_train_epochs 1 \
@@ -17,6 +18,6 @@ deepspeed run_clm.py \
   --save_strategy epoch \
   --save_steps 1 \
   --learning_rate 5e-5 \
-  --lr_scheduler_type "cosine" \
-  --warmup_ratio 0.05
+  --warmup_ratio 0.05 \
+  --ds_config ds_config_soft.json
 
