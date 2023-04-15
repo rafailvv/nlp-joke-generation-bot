@@ -490,14 +490,14 @@ def main():
                 remove_columns=column_names,
             )
 
-    max_length = max(
-        [
-            len(row["input_ids"]) for row in tokenized_datasets["train"]
-        ] + [
-            len(row["input_ids"]) for row in tokenized_datasets["validation"]
-        ]
-    )
-    block_size = min(max_length, block_size)
+    # max_length = max(
+    #     [
+    #         len(row["input_ids"]) for row in tokenized_datasets["train"]
+    #     ] + [
+    #         len(row["input_ids"]) for row in tokenized_datasets["validation"]
+    #     ]
+    # )
+    # block_size = min(max_length, block_size)
 
     logger.info(f"Block size: {block_size}")
     with training_args.main_process_first(desc="dataset map tokenization"):
