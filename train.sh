@@ -19,5 +19,5 @@ deepspeed run_clm.py \
   --save_steps 1 \
   --learning_rate 5e-5 \
   --warmup_ratio 0.05 \
-  --ds_config ds_config_soft.json
+  --deepspeed ds_config_soft.json
 
