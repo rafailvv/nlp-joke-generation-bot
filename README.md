@@ -4,7 +4,6 @@ The Joke Generation Bot is a Decoder-based Transformer model that uses natural l
 
 # Team Members
 
-- [Panov Evgenii](https://github.com/dreamer-tech)
 - [Rafail Venediktov](https://github.com/rafailvv)
 - [Aliaksei Korshuk](https://github.com/AlekseyKorshuk)
 
